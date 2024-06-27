@@ -24,6 +24,12 @@
     <div class="card-body login-card-body">
       <p class="login-box-msg">Sign in to start your session</p>
 
+        @if($errors->has('email'))
+            <div class="alert alert-danger">
+                {{$errors->first('email')}}
+            </div>
+        @endif
+
       <form action="{{route('admin.login')}}" method="post">
         @csrf
         <div class="input-group mb-3">

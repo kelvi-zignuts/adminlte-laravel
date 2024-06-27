@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -13,6 +14,20 @@ class LoginController extends Controller
     }
     public function login(Request $request)
     {
-        dd($request->all());
+        // dd($request->all());
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required'
+        ]);
+        if(Auth::attempt($request->only('email','password')))
+        {
+            return redirect()->route('admin.dashboard');
+        }
+
+        // return redirect()->route('user.dashboard');
+
+        return back()->withErrors([
+            'email' => 'the provided credentials do not match our records'
+        ]);
     }
 }
