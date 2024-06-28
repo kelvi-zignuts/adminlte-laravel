@@ -5,6 +5,8 @@ namespace Database\Seeders;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Database\Seeders\FirebaseDataSeeder;
+use Database\Seeders\FirebaseUserSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,10 +18,16 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         $user = User::factory()->create([
-            'name' => 'Admin',
+            'first_name' => 'Admin',
+            "last_name" => 'admin',
             'email' => 'admin@example.com',
             'password' => bcrypt('password'),
-            'user_type' => 'admin',
+            'user_type' => 'admin'
         ]);
+        
     }
+    // public function run()
+    // {
+    //     $this->call(FirebaseDataSeeder::class);
+    // }
 }
