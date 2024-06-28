@@ -23,8 +23,8 @@
 </head>
 
 <body class="hold-transition login-page">
-  <div id="error" style="color: red; display:none;"></div>
-        <div id="sentMessage" style="color: green; display:none;"></div>
+    <div id="error" style="color: red; display:none;"></div>
+    <div id="sentMessage" style="color: green; display:none;"></div>
     <div class="login-box">
         <div class="login-logo">
             <h1>Expence Manager</h1>
@@ -39,12 +39,12 @@
                 {{$errors->first('email')}}
             </div>
         @endif --}}
-        
+
                 <form action="{{ route('admin.verifyOtp') }}" method="POST">
-                  @csrf
+                    @csrf
                     <div class="input-group mb-3">
-                      {{-- <label for="number">Enter Phone Number</label> --}}
-                      {{-- <input type="text" id="number"  > --}}
+                        {{-- <label for="number">Enter Phone Number</label> --}}
+                        {{-- <input type="text" id="number"  > --}}
                         <input type="text" id="number" class="form-control" placeholder="+91 **********">
                         <div class="input-group-append">
                             <div class="input-group-text">

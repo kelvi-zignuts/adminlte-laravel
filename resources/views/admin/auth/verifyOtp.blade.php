@@ -27,46 +27,46 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <script>
-    var confirmationResult;
+        var confirmationResult;
 
-    function verifyCode() {
-        var code = $('#verificationCode').val();
+        function verifyCode() {
+            var code = $('#verificationCode').val();
 
-        if (!confirmationResult) {
-            $('#error').text('No verification in progress.');
-            $('#error').show();
-            return;
+            if (!confirmationResult) {
+                $('#error').text('No verification in progress.');
+                $('#error').show();
+                return;
+            }
+
+            confirmationResult.confirm(code).then(function(result) {
+                var user = result.user;
+
+                $('#success').text('OTP verified successfully!');
+                $('#success').show();
+
+            }).catch(function(error) {
+                $('#error').text(error.message);
+                $('#error').show();
+            });
         }
 
-        confirmationResult.confirm(code).then(function (result) {
-            var user = result.user;
+        // var confirmationResult = window.confirmationResult;
 
-            $('#success').text('OTP verified successfully!');
-            $('#success').show();
-
-        }).catch(function (error) {
-            $('#error').text(error.message);
-            $('#error').show();
-        });
-    }
-
-    // var confirmationResult = window.confirmationResult;
-
-    //     function verifyCode() {
-    //         var otp = document.getElementById('otp').value;
-    //         confirmationResult.confirm(otp).then(function (result) {
-    //             // OTP is confirmed, handle success (e.g., redirect or show success message)
-    //             $('#success').text('OTP verified successfully!');
-    //             $('#success').show();
-    //             setTimeout(function () {
-    //                 window.location.href = "{{ route('admin.dashboard') }}"; // Redirect to dashboard or desired page
-    //             }, 2000);
-    //         }).catch(function (error) {
-    //             // Handle error (e.g., display error message)
-    //             $('#error').text(error.message);
-    //             $('#error').show();
-    //         });
-    //     }
+        //     function verifyCode() {
+        //         var otp = document.getElementById('otp').value;
+        //         confirmationResult.confirm(otp).then(function (result) {
+        //             // OTP is confirmed, handle success (e.g., redirect or show success message)
+        //             $('#success').text('OTP verified successfully!');
+        //             $('#success').show();
+        //             setTimeout(function () {
+        //                 window.location.href = "{{ route('admin.dashboard') }}"; // Redirect to dashboard or desired page
+        //             }, 2000);
+        //         }).catch(function (error) {
+        //             // Handle error (e.g., display error message)
+        //             $('#error').text(error.message);
+        //             $('#error').show();
+        //         });
+        //     }
     </script>
 </body>
 
