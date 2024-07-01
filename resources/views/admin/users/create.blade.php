@@ -28,6 +28,13 @@
             <input type="text" name="phone" id="phone" class="form-control" value="{{ old('phone') }}">
         </div>
         <div class="form-group">
+            <label for="roles">Roles</label>
+            <select name="roles" id="roles" class="form-control">
+                <option value="General User">General User</option>
+                <option value="Admin">Admin</option>
+            </select>
+        </div>
+        {{-- <div class="form-group">
             <label for="email">Email</label>
             <input type="email" name="email" id="email" class="form-control" value="{{ old('email') }}">
         </div>
@@ -38,7 +45,7 @@
         <div class="form-group">
             <label for="password_confirmation">Confirm Password</label>
             <input type="password" name="password_confirmation" id="password_confirmation" class="form-control">
-        </div>
+        </div> --}}
         <button type="submit" class="btn btn-primary">Create</button>
     </form>
 @endsection

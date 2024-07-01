@@ -16,18 +16,19 @@ Route::get('/', function () {
 
 Route::get('user/dashboard',[UserDashboardController::class,'index'])->name('user.dashboard');
 
-Route::middleware(['admin'])->group(function(){
-    Route::get('/dashboard',[DashboardController::class,'index'])->name('admin.dashboard');
+
+    // Route::get('/dashboard',[DashboardController::class,'index'])->name('admin.dashboard');
     Route::get('/logout',[DashboardController::class,'logout'])->name('admin.logout');
+
+
+Route::prefix('admin')->group(function () {
+    Route::get('/dashboard',[DashboardController::class,'index'])->name('admin.dashboard');
+    // Route::get('/login',[LoginController::class,'index'])->name('admin.login.page');
+    // Route::post('/login',[LoginController::class,'login'])->name('admin.login');
+    Route::get("/login",[LoginController::class,'otpSend'])->name('admin.login.page');
+    Route::post('/login',[LoginController::class,'verifyOtp'])->name('admin.login');
 });
-Route::middleware(['admin_guest'])->group(function(){
-    Route::prefix('admin')->group(function () {
-        // Route::get('/login',[LoginController::class,'index'])->name('admin.login.page');
-        // Route::post('/login',[LoginController::class,'login'])->name('admin.login');
-        Route::get("/login",[LoginController::class,'otpSend'])->name('admin.login.page');
-        Route::post('/login',[LoginController::class,'verifyOtp'])->name('admin.login');
-    });
-});
+
 // Route::prefix('user')->group(function () {
 //     Route::post('/login',[LoginController::class,'login'])->name('user.login');
 //    });
@@ -41,8 +42,10 @@ Route::prefix('users')->group(function () {
     Route::delete('/{user}/delete', [UserController::class, 'destroy'])->name('users.destroy');
 });
 
-Route::get("/mobile-verification",[LoginController::class,'otpSend'])->name('admin.otp');
-Route::get('/verify', [LoginController::class, 'verifyOtp'])->name('admin.verifyOtp');
+// Route::get("/mobile-verification",[LoginController::class,'otpSend'])->name('admin.otp');
+// Route::get('/verify-otp', [LoginController::class, 'showVerifyOtpForm'])->name('verify.otp');
+
+// Route::get('/verify', [LoginController::class, 'verifyOtp'])->name('admin.verifyOtp');
 
 // Route::get('/verify-otp', [LoginController::class, 'verifyOtp'])->name('admin.verify-otp');
 

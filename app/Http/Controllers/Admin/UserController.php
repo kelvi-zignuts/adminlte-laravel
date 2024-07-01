@@ -8,11 +8,16 @@ use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
-    public function index()
-    {
-        $users = User::all();
-        return view('admin.users.index', compact('users'));
-    }
+    public function index(Request $request)
+{
+    $role = $request->input('role'); // Get role filter from query parameter
+
+    // Query users based on role filter, or get all users if no filter is applied
+    $users = $role ? User::where('roles', $role)->get() : User::all();
+
+    return view('admin.users.index', compact('users'));
+}
+
 
     public function create()
     {
@@ -25,8 +30,7 @@ class UserController extends Controller
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'phone' => 'required|string|max:15|unique:users',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
+            'roles' => 'required|in:Admin,General User',
         ]);
 
         User::create($request->all());
@@ -50,7 +54,7 @@ class UserController extends Controller
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'phone' => 'required|string|max:15|unique:users,phone,' . $user->id,
-            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
+            'roles' => 'required|in:Admin,General User',
         ]);
 
         $user->update($request->all());

@@ -16,6 +16,8 @@
     <!-- Theme style -->
     <link rel="stylesheet" href="/adminlte/dist/css/adminlte.min.css">
 
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css'>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -25,26 +27,21 @@
 <body class="hold-transition login-page">
     <div id="error" style="color: red; display:none;"></div>
     <div id="sentMessage" style="color: green; display:none;"></div>
+    <div id="success" style="color: green; display:none;"></div>
     <div class="login-box">
         <div class="login-logo">
             <h1>Expence Manager</h1>
         </div>
         <!-- /.login-logo -->
-        <div class="card">
+        <div class="card" id="sendForm">
             <div class="card-body login-card-body">
                 <p class="login-box-msg">Sign in to start your session</p>
 
-                {{-- @if ($errors->has('email'))
-            <div class="alert alert-danger">
-                {{$errors->first('email')}}
-            </div>
-        @endif --}}
-
-                <form action="{{ route('admin.verifyOtp') }}" method="POST">
+                <form action="" method="POST">
                     @csrf
                     <div class="input-group mb-3">
                         {{-- <label for="number">Enter Phone Number</label> --}}
-                        {{-- <input type="text" id="number"  > --}}
+                        {{-- <input type="text" id="number"> --}}
                         <input type="text" id="number" class="form-control" placeholder="+91 **********">
                         <div class="input-group-append">
                             <div class="input-group-text">
@@ -55,13 +52,13 @@
                     <div class="input-group mb-3">
                         <div id="recaptcha-container"></div>
                         {{-- <input type="password" name="password" class="form-control" placeholder="Password">
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-lock"></span>
-            </div>
-          </div> --}}
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div> --}}
                     </div>
-                    <div class="row">
+                    <div class="row justify-content-center">
                         {{-- <div class="col-8">
                             <div class="icheck-primary">
                                 <input type="checkbox" id="remember">
@@ -71,8 +68,9 @@
                             </div>
                         </div> --}}
                         <!-- /.col -->
-                        <div class="col-4">
-                            <button type="button" class="btn btn-primary btn-block" onclick="sendCode()">Send</button>
+                        <div class="col-6 justify-content-center">
+                            <button type="button" class="btn btn-primary btn-block" onclick="sendCode()">Send
+                                OTP</button>
                         </div>
                         <!-- /.col -->
                     </div>
@@ -99,7 +97,89 @@
             <!-- /.login-card-body -->
         </div>
     </div>
-    <!-- /.login-box -->
+
+    {{-- <form action="" method="POST" id="verifyForm" style="display: none;">
+        <label for="">Enter verification Code</label>
+        <input type="text" id="verificationCode" placeholder="Enter Verification Code"><br>
+        <button type="button" onclick="verifyCode()">Verify Code</button>
+    </form> --}}
+    {{-- <div class="card" id="verifyForm">
+        <div class="card-body login-card-body">
+            <p class="login-box-msg">Enter verification Code</p>
+
+            <form action="" method="POST">
+                @csrf
+                <div class="input-group mb-3">
+                    <input type="text" id="verificationCode" class="form-control" placeholder="Enter Verification Code">
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-phone"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group mb-3">
+                    <div id="recaptcha-container"></div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <button type="button" class="btn btn-primary btn-block" onclick="verifyCode()">Verify
+                            Code</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div> --}}
+
+    <div class="container" id="verifyForm" style="display: none">
+        <div class="row justify-content-center">
+            <div class="col-md-4">
+                <div class="card" id="verifyForm">
+                    <div class="card-body login-card-body">
+                        <p class="login-box-msg">Enter verification Code</p>
+
+                        <form action="" method="POST">
+                            @csrf
+                            <div class="input-group mb-3">
+                                <input type="text" id="verificationCode" class="form-control"
+                                    placeholder="Enter Verification Code">
+                                <div class="input-group-append">
+                                    <div class="input-group-text">
+                                        <span class="fas fa-phone"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class=" row  mb-3 justify-content-center">
+                                <div class="col-6 justify-content-center">
+                                    <button type="button" class="btn btn-primary btn-block mr-2"
+                                        onclick="verifyCode()">Verify Code</button>
+                                </div>
+                            </div>
+
+                        </form>
+                        {{-- <div class="social-auth-links text-center mb-3">
+                            <p>- OR -</p>
+                            <a href="#" class="btn btn-block btn-primary">
+                                <i class="fab fa-facebook mr-2"></i> Sign in using Facebook
+                            </a>
+                            <a href="#" class="btn btn-block btn-danger">
+                                <i class="fab fa-google-plus mr-2"></i> Sign in using Google+
+                            </a>
+                        </div> --}}
+                        <!-- /.social-auth-links -->
+
+                        <p class="mb-1">
+                            Didn't Got OTP,<a href="forgot-password.html">Resend</a>
+                        </p>
+                        {{-- <p class="mb-0">
+                            <a href="register.html" class="text-center">Register a new membership</a>
+                        </p> --}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 
     <!-- jQuery -->
     <script src="/adminlte/plugins/jquery/jquery.min.js"></script>
@@ -140,35 +220,65 @@
 
             firebase.auth().signInWithPhoneNumber(number, window.recaptchaVerifier).then(function(confirmationResult) {
                 window.confirmationResult = confirmationResult;
-                // coconfirmationResult;
+                coderesult = confirmationResult;
 
                 $('#sentMessage').text('Message sent successfully!');
                 $('#sentMessage').show();
 
                 setTimeout(function() {
-                    window.location.href = "{{ route('admin.verifyOtp') }}";
-                }, 2000);
+                    $('#sentMessage').hide();
+                }, 2000); // 3000 milliseconds = 3 seconds
+
+                $('#sendForm').hide();
+                $('#verifyForm').show();
+
             }).catch(function(error) {
                 $('#error').text(error.message);
                 $('#error').show();
+
+                setTimeout(function() {
+                    $('#error').hide();
+                }, 5000);
             });
         }
 
-        // function verifyCode(){
-        //     var code = $('#verificationCode').val();
-        //     confirmationResult.confirm(code).then(function(result){
-        //         var user = result.user;
+        function verifyCode() {
+            var code = $('#verificationCode').val();
 
-        //         $('#success').text('OTP successfully!');
-        //         $('#success').show();
+            if (code.length < 6) {
+                $('#error').text('OTP is not valid. Please enter the correct OTP.');
+                $('#error').show();
 
+                setTimeout(function() {
+                    $('#error').hide();
+                }, 5000);
+                return;
+            }
 
-        //     }).catch(function(error){
-        //         $('#error').text(error.message);
-        //         $('#error').show();
-        //     })
-        // }
+            coderesult.confirm(code).then(function(result) {
+                var user = result.user;
+
+                $('#success').text('OTP successfully!');
+                $('#success').show();
+
+                setTimeout(function() {
+                    $('#success').hide();
+                    window.location.href = '/admin/dashboard';
+                }, 3000); // 3000 milliseconds = 3 seconds
+
+                // window.location.href = '/admin/dashboard';
+
+            }).catch(function(error) {
+                $('#error').text('OTP is not valid. Please enter the correct OTP.');
+                $('#error').show();
+                
+                setTimeout(function() {
+                    $('#error').hide();
+                }, 5000); // 5000 milliseconds = 5 seconds
+            })
+        }
     </script>
+    {{-- <script src="js/firebase.js"></script> --}}
 </body>
 
 </html>

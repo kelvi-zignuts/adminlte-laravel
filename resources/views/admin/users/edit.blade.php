@@ -9,6 +9,7 @@
                 @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>
                 @endforeach
+            </ul>
         </div>
     @endif
 
@@ -28,8 +29,11 @@
             <input type="text" name="phone" id="phone" class="form-control" value="{{ $user->phone }}">
         </div>
         <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" name="email" id="email" class="form-control" value="{{ $user->email }}">
+            <label for="roles">Roles</label>
+            <select name="roles" id="roles" class="form-control">
+                <option value="General User" {{ $user->role == 'General User' ? 'selected' : '' }}>General User</option>
+                <option value="Admin" {{ $user->role == 'Admin' ? 'selected' : '' }}>Admin</option>
+            </select>
         </div>
         <button type="submit" class="btn btn-primary">Update</button>
     </form>
