@@ -14,7 +14,6 @@ class UserController extends Controller
         $role = $request->input('role');
         $startDate = $request->input('start_date');
         $endDate = $request->input('end_date');
-        $status = $request->input('status');
 
         $query = User::query();
 
@@ -28,16 +27,10 @@ class UserController extends Controller
             $query->whereBetween('created_at', [Carbon::parse($startDate)->startOfDay(), Carbon::parse($endDate)->endOfDay()]);
         }
 
-        if ($status) {
-            $query->where('status', $status);
-        }
-
-        $users = $query->get();
+        $users = $query->get(); // Execute the query and retrieve users
 
         return view('admin.users.index', compact('users'));
     }
-
-
 
     public function create()
     {
@@ -61,7 +54,8 @@ class UserController extends Controller
         $data['status'] = 'approved';
 
         User::create($data);
-
+        
+        // return response()->json(['success' => true]);
         return redirect()->route('users.index')->with('success', 'User created successfully.');
     }
 

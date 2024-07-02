@@ -12,6 +12,7 @@
     },
     "dependencies": {
         "@firebase/auth": "^1.7.4",
+        "bootstrap": "^5.3.3",
         "firebase": "^10.12.2",
         "sweetalert": "^2.1.2"
     }
