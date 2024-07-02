@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Carbon\Carbon;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -9,14 +10,33 @@ use App\Http\Controllers\Controller;
 class UserController extends Controller
 {
     public function index(Request $request)
-{
-    $role = $request->input('role'); // Get role filter from query parameter
+    {
+        $role = $request->input('role');
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+        $status = $request->input('status');
 
-    // Query users based on role filter, or get all users if no filter is applied
-    $users = $role ? User::where('roles', $role)->get() : User::all();
+        $query = User::query();
 
-    return view('admin.users.index', compact('users'));
-}
+        if ($role) {
+            $query->where('roles', $role);
+        }
+
+        $query->where('user_type', '!=', 'admin');
+
+        if ($startDate && $endDate) {
+            $query->whereBetween('created_at', [Carbon::parse($startDate)->startOfDay(), Carbon::parse($endDate)->endOfDay()]);
+        }
+
+        if ($status) {
+            $query->where('status', $status);
+        }
+
+        $users = $query->get();
+
+        return view('admin.users.index', compact('users'));
+    }
+
 
 
     public function create()
@@ -33,7 +53,14 @@ class UserController extends Controller
             'roles' => 'required|in:Admin,General User',
         ]);
 
-        User::create($request->all());
+        // User::create($request->all());
+
+        $data = $request->all();
+
+        // Set the status to 'approved' if the user is an admin
+        $data['status'] = 'approved';
+
+        User::create($data);
 
         return redirect()->route('users.index')->with('success', 'User created successfully.');
     }

@@ -21,6 +21,7 @@ return new class extends Migration
             // $table->string('password')->nullable();
             $table->string('user_type')->default('user');
             $table->enum('roles', ['Admin', 'General User'])->default('General User');
+            $table->enum('status', ['approved', 'reconciled', 'declined'])->default('approved');
             $table->rememberToken();
             $table->timestamps();
         });

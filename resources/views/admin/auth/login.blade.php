@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AdminLTE 3 | Log in</title>
+    <title>Log in</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -263,7 +263,7 @@
 
                 setTimeout(function() {
                     $('#success').hide();
-                    window.location.href = '/admin/dashboard';
+                    window.location.href = '/admin/users/';
                 }, 3000); // 3000 milliseconds = 3 seconds
 
                 // window.location.href = '/admin/dashboard';
